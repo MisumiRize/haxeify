@@ -9,7 +9,7 @@ function isHaxe(file) {
 }
 
 function haxeToJs(file) {
-    return file.replace(haxeRe, '.js');
+    return file + '.js';
 }
 
 function haxeToClass(file) {
@@ -41,18 +41,20 @@ function haxeify(file, options) {
         args.push('-dce', options.dce);
     }
 
-    console.log(args);
+    if (process.cwd() != path.dirname(file)) {
+        args.push('-cp', path.resolve(process.cwd(), path.dirname(file)));
+    }
 
     return through(function(_, __, next) {
         var that = this;
         var stderr = '';
-        var process = spawn(cmd, args);
+        var haxe = spawn(cmd, args);
 
-        process.stderr.on('data', function (buf) {
+        haxe.stderr.on('data', function (buf) {
             stderr += buf;
         });
 
-        process.on('close', function (code) {
+        haxe.on('close', function (code) {
             if (code !== 0) {
                 that.emit('error', stderr);
             }
