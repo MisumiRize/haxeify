@@ -1,0 +1,16 @@
+{
+  "name": "require-from-haxe",
+  "version": "1.0.0",
+  "description": "Requiring CommonJS from Haxe (>= 3.2.0) with type",
+  "main": "index.js",
+  "scripts": {
+    "build": "browserify -t haxeify . -o bundle.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rize MISUMI <r@ayase-e.li>",
+  "license": "MIT",
+  "devDependencies": {
+    "browserify": "^8.1.1",
+    "haxeify": "0.0.1"
+  }
+}
